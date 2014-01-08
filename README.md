@@ -3,7 +3,7 @@ pythonSchemeExample
 
 Run python code from a URL scheme
 
-To use it URL uncode some python source code and then append the scheme `python://` 
+To use it URL encode some python source code and then append the scheme `python://` 
 
 Here is a exaple,   
     
