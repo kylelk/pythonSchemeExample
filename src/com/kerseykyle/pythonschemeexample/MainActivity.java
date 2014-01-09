@@ -14,6 +14,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +36,23 @@ public class MainActivity extends Activity {
 				String encodedPythonCode=uri.toString().substring(9);
 				String decodedPythonCode;
 				decodedPythonCode = URLDecoder.decode(encodedPythonCode, "UTF-8");
-				Toast.makeText(this, decodedPythonCode, Toast.LENGTH_SHORT).show();
-				onQPyExec(decodedPythonCode);
+				EditText input = (EditText) findViewById(R.id.input);
+				input.setText(decodedPythonCode);
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		  	Button mRunButton = (Button) findViewById(R.id.run_button);
+		  	mRunButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub 
+					EditText input = (EditText) findViewById(R.id.input);
+					String codeToRun = input.getText().toString();
+					onQPyExec(codeToRun);
+				}
+			});
 		}
 
 	    }
@@ -64,7 +78,6 @@ public class MainActivity extends Activity {
 	public void onQPyExec(String source) {
 		
 		if (checkAppInstalledByName(getApplicationContext(), extPlgPlusName)) {
-			Toast.makeText(this, "Sample of calling QPython API", Toast.LENGTH_SHORT).show();
 
 	        Intent intent = new Intent();
 	        intent.setClassName(extPlgPlusName, extPlgPlusName+".MPyApi");
@@ -109,8 +122,9 @@ public class MainActivity extends Activity {
 		        String param = bundle.getString("param"); // param you set 
 		        String result = bundle.getString("result"); // Result your Pycode generate
 		        //Toast.makeText(this, "onQPyExec: return ("+result+")", Toast.LENGTH_SHORT).show();
-		        TextView outputArea = (TextView) findViewById(R.id.output_area);
+		        TextView outputArea = (TextView) findViewById(R.id.output);
 		        outputArea.setText(result);
+		        outputArea.setTextIsSelectable(true);
 	    	} else {
 		        Toast.makeText(this, "onQPyExec: data is null", Toast.LENGTH_SHORT).show();
 
