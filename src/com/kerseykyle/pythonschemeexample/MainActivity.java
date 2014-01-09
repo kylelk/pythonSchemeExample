@@ -79,6 +79,7 @@ public class MainActivity extends Activity {
 		
 		if (checkAppInstalledByName(getApplicationContext(), extPlgPlusName)) {
 
+
 	        Intent intent = new Intent();
 	        intent.setClassName(extPlgPlusName, extPlgPlusName+".MPyApi");
 	        intent.setAction(extPlgPlusName+".action.MPyApi");
